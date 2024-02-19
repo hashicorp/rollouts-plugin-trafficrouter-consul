@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 FROM --platform=$BUILDPLATFORM golang:1.21.6 as builder
 
 ENV GO111MODULE=on
