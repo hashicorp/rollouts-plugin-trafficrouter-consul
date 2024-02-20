@@ -12,7 +12,6 @@ DEV_IMAGE?=rollouts-plugin-trafficrouter-consul-dev
 go_lint: ## Run linter.
 	golangci-lint run ./...
 
-##@ Build
 .PHONY: build
 build: ## Build the rollouts-plugin-trafficrouter-consul binary
 	@$(SHELL) $(CURDIR)/build-support/scripts/build-local.sh --os linux --arch $(GOARCH)
