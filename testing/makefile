@@ -42,7 +42,7 @@ consul-setup: kind deploy
 	./scripts/verify-pod-ready.sh consul-connect-injector 300; \
 
 kind: kind-delete
-	kind create cluster --image kindest/node:$(KUBERNETES_VERSION) --name=dc1 --config ./resources/kind_config.yaml
+	kind create cluster --image kindest/node:$(KUBERNETES_VERSION) --name=dc1
 
 add-helm-repo:
 	helm repo add hashicorp https://helm.releases.hashicorp.com
@@ -58,7 +58,8 @@ argo-setup: deploy-argo apply-crds
 
 deploy-argo:
 	kubectl create namespace argo-rollouts; \
-	kubectl apply -n argo-rollouts -f install.yaml
+	#kubectl apply -n argo-rollouts -f install.yaml
+	helm install argo-rollouts argo/argo-rollouts -f values_rollout.yaml -n argo-rollouts; \
 	kubectl apply -f $(PLUGIN_DIR)/yaml/rbac.yaml
 
 apply-crds:
@@ -76,7 +77,7 @@ create-kind-config:
 	./scripts/create-kind-config.sh ./resources/kind_config.yaml $(PLUGIN_DIR)
 
 build-plugin:
-	make -C $(PLUGIN_DIR) build
+	make -C $(PLUGIN_DIR) build-simple
 
 ## EXTRAS
 install-required:

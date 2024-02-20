@@ -1,0 +1,29 @@
+controller:
+  image:
+    # -- Registry to use
+    registry: docker.io
+    # -- Repository to use
+    repository: wilko1989/argo-rollouts
+    # -- Overrides the image tag (default is the chart appVersion)
+    tag: latest
+    # -- Image pull policy
+    pullPolicy: Always
+  initContainers:
+    - name: copy-consul-plugin
+      image: docker.io/wilko1989/rollouts-plugin-trafficrouter-consul:latest@sha256:82bb782cb2ec756f38f76b7db870f5d55cf2ff0da42edf5a093a74d84b41d94f
+      command: ["/bin/sh", "-c"]
+      args:
+        - cp /bin/rollouts-plugin-trafficrouter-consul /plugin-bin/hashicorp
+      volumeMounts:
+        - name: consul-plugin
+          mountPath: /plugin-bin/hashicorp
+  trafficRouterPlugins:
+    trafficRouterPlugins: |-
+      - name: "hashicorp/consul"
+        location: "file:///plugin-bin/hashicorp/rollouts-plugin-trafficrouter-consul"
+  volumes:
+    - name: consul-plugin
+      emptyDir: {}
+  volumeMounts:
+    - name: consul-plugin
+      mountPath: /plugin-bin/hashicorp
