@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 
 SCRIPT_NAME="$(basename ${BASH_SOURCE[0]})"
 pushd $(dirname ${BASH_SOURCE[0]}) > /dev/null
