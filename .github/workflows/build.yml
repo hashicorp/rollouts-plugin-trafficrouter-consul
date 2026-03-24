@@ -149,7 +149,7 @@ jobs:
           echo "minor_dev_tag=$(echo ${{ env.version }}| sed -E 's/([0-9]+\.[0-9]+)\.[0-9]+(-[0-9a-zA-Z\+\.]+)?$/\1\2/')" >> $GITHUB_ENV
 
       - name: Docker Build (Action)
-        uses: hashicorp/actions-docker-build@76d2fc91532d816ca2660d8f3139e432ac3700fd
+        uses: hashicorp/actions-docker-build@e028f0fa0532e4e971c032e2f2fe6a3aec398f65
         with:
           version: ${{ env.version }}
           target: release-default
